@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -6,11 +7,12 @@ const adminRoutes = require("./src/routes/admin");
 const loginRoutes = require("./src/routes/login");
 const ErrorHandler = require("./src/utils/ErrorHandler");
 const testRoutes = require("./src/routes/test");
+const corsOptions = require("./src//config/corsOptions");
 const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
-app.use("/", express.static("uploads"));
+app.use(cors(corsOptions));
+app.use("/", express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 //user routes
